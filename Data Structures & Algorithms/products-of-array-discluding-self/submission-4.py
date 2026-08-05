@@ -1,0 +1,35 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        # Naive approach: For each index multiply all remaining values O(N^2)
+        # Another approach: Multiply all numbers and divide by nums[i]
+        # If there is 0 then product of all numbers will be 0 (except the position(s) of 0)
+
+        # If there is 0 then you cannot divide by nums[i] when nums[i] = 0. Handle as special case
+
+        # Pre fix Post fix approach:
+        # First pass calculate the prefix sum
+        # Second pass multiply by the postfix sum at each index
+
+
+        res = [1]
+        for i in range(1,len(nums)):
+            res.append(nums[i - 1]*res[i - 1])
+        
+        prefix_sum = 1
+        for j in range(len(nums) - 1,-1,-1):
+            if j == len(nums) - 1:
+                continue
+            prefix_sum *= nums[j + 1]
+            res[j] = prefix_sum * res[j]
+        return res
+
+# Time complexity: O(N) --> 1 pass for Prefix and 1 pass for Postfix
+
+# Space complexity: O(1) --> Only output array as the additional memory used, which is not counted.
+
+
+
+
+
+
+
